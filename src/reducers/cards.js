@@ -33,7 +33,6 @@ export default (state = initialState, action) => {
         }
 
         case REMOVE_CARD: {
-            console.log(action);
             const cityId = action.cityId;
             const withoutRemoved = state.weatherList.filter(
                 item => item.cityId !== cityId

@@ -39,11 +39,8 @@ export const reloadAllCards = () => (dispatch, getState) => {
     const state = getState();
     const promises = state.cards.weatherList.map(fetchWeather);
 
-    console.log('promises', promises);
-
     Promise.all(promises)
         .then(weatherList => {
-            console.log('weatherList', weatherList);
             const cards = weatherList.map(processRequestResult);
             
             dispatch(updateAllCards(cards));
