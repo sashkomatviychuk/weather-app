@@ -1,4 +1,4 @@
-import { fetchWeather, processRequestResult } from './../helpers/config';
+import { fetchWeather, processRequestResult } from '../helpers/weather';
 import { hideModal } from './modal';
 
 export const ADD_CARD = 'ADD_CARD';

@@ -24,5 +24,13 @@ export default function getCities() {
             code: '2475687',
             name: 'Portland, OR',
         },
+        {
+            code: '2487956',
+            name: 'San Francisco, CA',
+        },
+        {
+            code: '2490383',
+            name: 'Seattle, WA',
+        },
     ];
 }
