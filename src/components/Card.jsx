@@ -24,7 +24,7 @@ class Card extends React.Component {
                     <div className="d-flex justify-content-between">
                         <h5 className="card-title">{cityName}</h5>
                         <button
-                            className="align-self-start remove-btn icon-close"
+                            className="remove-btn icon-close"
                             onClick={this.removeCityHandler}
                         >
                         </button>

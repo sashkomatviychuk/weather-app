@@ -4,12 +4,34 @@ body {
   font-family: sans-serif;
 }
 
+.bg-app {
+  background-color: #57d2ef;
+}
+
+.navbar-nav {
+  flex-direction: row;
+}
+
+.navbar-collapse {
+  flex-basis: 0;
+}
+
+.navbar-nav .nav-item:first-child .nav-link {
+  font-size: 2rem;
+  padding-right: 2rem;
+}
+
+.navbar-nav .nav-item:last-child .nav-link {
+  padding-right: 0;
+}
+
 .modal__content {
   min-width: 280px;
 }
 
 .app__title {
   color: white;
+  font-size: 1.3rem;
 }
 
 .remove-btn {
@@ -19,6 +41,33 @@ body {
 
 .remove-btn:focus {
   outline: 0;
+}
+
+.custom-icon {
+  height: 24px;
+  width: 24px;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-color: transparent;
+}
+
+.custom-icon.icon-reload {
+  background-image: url('/images/icon-refresh.svg');
+}
+
+.custom-icon.icon-add {
+  background-image: url('/images/icon-add.svg');
+}
+
+.custom-icon.icon-app {
+  background-image: url('/images/icon-app.svg');
+}
+
+span.icon-app {
+  width: 32px;
+  height: 32px;
+  display: block;
 }
 
 .icon-close {

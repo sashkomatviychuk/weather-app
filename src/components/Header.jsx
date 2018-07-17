@@ -8,14 +8,14 @@ import { reloadAllCards } from './../actions/cards';
 const navClasses = classNames([
     'navbar',
     'navbar-expand-sm',
-    'bg-primary',
+    'bg-app',
     'navbar-dark',
     'justify-content-between',
 ]);
 
 const navUlClasses = classNames([
     'navbar-nav',
-    'collapse navbar-collapse',
+    'navbar-collapse',
     'justify-content-end',
 ]);
 
@@ -33,28 +33,23 @@ class Header extends Component {
         return (
             <nav className={navClasses}>
                 <div className="app__title">
-                    <span>Weather app</span>
+                    <span className="custom-icon icon-app"></span>
                 </div>
-                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
-                </button>
                 <ul className={navUlClasses} id="navbarSupportedContent">
                     <li className="nav-item">
                         <button
                             onClick={this.reloadCardsHandler}
                             type="button"
-                            className="btn btn-link nav-link"
+                            className="btn btn-link nav-link custom-icon icon-reload"
                         >
-                            Reload
                         </button>
                     </li>
                     <li className="nav-item">
                         <button
                             onClick={this.showCitiesModalHandler}
                             type="button"
-                            className="btn btn-link nav-link"
+                            className="btn btn-link nav-link custom-icon icon-add"
                         >
-                            Add city
                         </button>
                     </li>
                 </ul>
