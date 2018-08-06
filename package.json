@@ -10,6 +10,8 @@
     "popper.js": "^1.14.3",
     "prop-types": "^15.6.2",
     "react": "^16.4.1",
+    "react-app-rewire-workbox": "^2.0.1",
+    "react-app-rewired": "^1.5.2",
     "react-dom": "^16.4.1",
     "react-redux": "^5.0.7",
     "react-responsive-modal": "^3.1.0",
@@ -17,12 +19,13 @@
     "redux": "^4.0.0",
     "redux-devtools-extension": "^2.13.5",
     "redux-localstorage": "^0.4.1",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "workbox-webpack-plugin": "^3.4.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test --env=jsdom",
     "eject": "react-scripts eject"
   }
 }
