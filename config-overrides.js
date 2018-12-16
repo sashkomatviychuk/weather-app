@@ -1,4 +1,7 @@
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
+const PurifyCSSPlugin = require('purifycss-webpack');
+const glob = require('glob-all');
+const path = require('path');
 
 function findSWPrecachePlugin(element) {
     return element.constructor.name === 'SWPrecacheWebpackPlugin'
@@ -23,6 +26,17 @@ module.exports = function override(config, env) {
 
             config.plugins[swPrecachePluginIndex] = new SWPrecacheWebpackPlugin(
                 overridenOptions
+            );
+
+            // change it
+            config.plugins.push(
+                new PurifyCSSPlugin({
+                    paths: glob.sync(
+                        [
+                            path.join(__dirname, 'src/**/*.jsx'),
+                        ]
+                    ),
+                })
             );
         }
     }
