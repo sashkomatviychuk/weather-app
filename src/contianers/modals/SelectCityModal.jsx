@@ -36,11 +36,13 @@ const cities$ = cityChange$
     });
 
 cityAdd$.flatMapLatest(() => cities$.take(1))
-    .flatMapLatest(params => fromPromise(fetchWeather(params)))
-    .flatMapLatest(weather => fromPromise(processRequestResult(weather)))
-    .filter(v => v)
+    .map(cityData => ({
+        ...cityData,
+        loaded: false,
+        data: null,
+    }))
     .onValue(card => {
-        dispatch(cards.actions.addNewCity(card));
+        dispatch(cards.actions.addCard(card));
         dispatch(modal.actions.hideModal());
     });
 

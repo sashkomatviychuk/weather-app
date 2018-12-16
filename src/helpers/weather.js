@@ -15,19 +15,6 @@ export const buildUrl = key => {
 }
 
 /**
- * @param {String} cityId
- * @param {String} cityName
- * @param {Object} weather
- */
-export const prepareWeatherCard = (cityId, cityName, weather) => {
-    return {
-        ...weather,
-        cityId,
-        cityName,
-    };
-}
-
-/**
  * Fetch weather for city
  * @param {Object} params
  * @param {String} params.cityId
@@ -36,22 +23,20 @@ export const prepareWeatherCard = (cityId, cityName, weather) => {
  */
 export const fetchWeather = params => {
     return axios.get(buildUrl(params.cityId))
-        .then(response => {
-            return {
-                url: response.config.url,
-                data: response.status === 200 ? response.data : null,
-                cityId: params.cityId,
-                cityName: params.cityName,
-            };
-        })
-        .catch(err => {
-            return {
-                url: err.config.url,
-                data: null,
-                cityId: params.cityId,
-                cityName: params.cityName,
-            } ;
-        });
+        .then(response => ({
+            url: response.config.url,
+            data: response.status === 200 ? response.data : null,
+            cityId: params.cityId,
+            cityName: params.cityName,
+            loaded: true,
+        }))
+        .catch(err => ({
+            url: err.config.url,
+            data: null,
+            cityId: params.cityId,
+            cityName: params.cityName,
+            loaded: true,
+        }));
 }
 
 /**
@@ -67,28 +52,25 @@ export const processRequestResult = async (weather) => {
         const query = weather.data.query;
         const created = query.created;
         const channel = query.results.channel;
-        // prepare new card
-        return prepareWeatherCard(
-            weather.cityId,
-            weather.cityName,
-            { created, channel }
-        );
+        
+        return {
+            ...weather,
+            data: { created, channel },
+        };
     } else {
         // get card from cache
         const url = weather.url;
 
-        return caches.match(url).then(function(response) {
+        return caches.match(url).then(function (response) {
             if (response) {
                 return response.json().then(function updateFromCache(json) {
-                    // parse data and dispatch add action
                     const channel = json.query.results.channel;
                     const created = json.query.created;
 
-                    return prepareWeatherCard(
-                        weather.cityId,
-                        weather.cityName,
-                        { created, channel }
-                    );
+                    return {
+                        ...weather,
+                        data: { created, channel },
+                    };
                 });
             }
         });
