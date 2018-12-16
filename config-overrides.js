@@ -1,10 +1,7 @@
-const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
-const PurifyCSSPlugin = require('purifycss-webpack');
-const glob = require('glob-all');
-const path = require('path');
+const { GenerateSW } = require('workbox-webpack-plugin');
 
-function findSWPrecachePlugin(element) {
-    return element.constructor.name === 'SWPrecacheWebpackPlugin'
+function findWorkboxPlugin(element) {
+    return element.constructor.name === 'GenerateSW'
 }
 
 const importScripts = [
@@ -13,30 +10,18 @@ const importScripts = [
 
 module.exports = function override(config, env) {
     if (env === "production") {
-        const swPrecachePluginIndex = config.plugins.findIndex(findSWPrecachePlugin);
+        const workBoxPluginIndex = config.plugins.findIndex(findWorkboxPlugin);
 
-        if (swPrecachePluginIndex !== -1) {
-            //
-            const plugin = config.plugins[swPrecachePluginIndex];
+        if (workBoxPluginIndex !== -1) {
+            const plugin = config.plugins[workBoxPluginIndex];
 
             const overridenOptions = {
-                ...plugin.workerOptions,
+                ...plugin.config,
                 importScripts,
             };
 
-            config.plugins[swPrecachePluginIndex] = new SWPrecacheWebpackPlugin(
+            config.plugins[workBoxPluginIndex] = new GenerateSW(
                 overridenOptions
-            );
-
-            // change it
-            config.plugins.push(
-                new PurifyCSSPlugin({
-                    paths: glob.sync(
-                        [
-                            path.join(__dirname, 'src/**/*.jsx'),
-                        ]
-                    ),
-                })
             );
         }
     }

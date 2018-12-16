@@ -1,22 +1,19 @@
-import { SHOW_MODAL, HIDE_MODAL } from './../actions/modal';
+import Immutable from 'immutable';
+import { actionsTypes } from 'actions/modal';
 
-let initialState = {
+let initialState = Immutable.fromJS({
     isOpen: false,
-};
+});
 
 export default (state = initialState, action) => {
     switch (action.type) {
-        case SHOW_MODAL:
-            return {
-                ...state,
-                isOpen: true,
-            };
+        case actionsTypes.SHOW_MODAL: {
+            return state.set('isOpen', true);
+        }
 
-        case HIDE_MODAL:
-            return {
-                ...state,
-                isOpen: false,
-            };
+        case actionsTypes.HIDE_MODAL: {
+            return state.set('isOpen', false);
+        }
 
         default:
             return state;

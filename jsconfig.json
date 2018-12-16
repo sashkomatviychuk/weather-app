@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "lib": ["es7"],
+        "paths": {
+            "*": ["./src/*", "./node_modules/*"]
+        },
+        "pretty": true,
+        "module": "es2015"
+    }
+}

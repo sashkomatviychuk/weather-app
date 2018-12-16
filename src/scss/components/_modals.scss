@@ -1,0 +1,16 @@
+.modal-content {
+    min-width: 280px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    h3 {
+        margin-top: 0;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .modal-content {
+        min-width: 100%;
+    }
+}

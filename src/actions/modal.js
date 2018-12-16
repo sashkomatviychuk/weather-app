@@ -1,15 +1,9 @@
-export const SHOW_MODAL = 'SHOW_MODAL';
-export const HIDE_MODAL = 'HIDE_MODAL';
-
-// show modal window
-export const showModal = () => {
-    return {
-        type: SHOW_MODAL,
-    }
+export const actionsTypes = {
+    SHOW_MODAL: 'SHOW_MODAL',
+    HIDE_MODAL: 'HIDE_MODAL',
 };
-// hide modal window
-export const hideModal = () => {
-    return {
-        type: HIDE_MODAL,
-    };
+
+export const actions = {
+    showModal: () => ({ type: actionsTypes.SHOW_MODAL }),
+    hideModal: () => ({ type: actionsTypes.HIDE_MODAL }),
 }

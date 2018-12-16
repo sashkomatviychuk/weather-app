@@ -1,0 +1,43 @@
+button {
+    outline: none;
+    border: 0;
+    cursor: pointer;
+
+    &:focus {
+        outline: none;
+    }
+
+    &.button {
+        padding: .5rem;
+        font-size: .9rem;
+        color: $color-white;
+        border-radius: .25rem;
+
+        &+.button {
+            margin-left: .5rem;
+        }
+
+        &.button-submit {
+            background-color: #28a745;
+
+            &:hover {
+                background-color: #218838;
+            }
+        }
+
+        &.button-cancel {
+            color: #212121;
+            background-color: #ffc107;
+
+            &:hover {
+                background-color: #e0a800;
+            }
+        }
+    }
+}
+
+.remove-btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+}

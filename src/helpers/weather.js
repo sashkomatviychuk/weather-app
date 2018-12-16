@@ -38,7 +38,7 @@ export const fetchWeather = params => {
     return axios.get(buildUrl(params.cityId))
         .then(response => {
             return {
-                url: response.request.url,
+                url: response.config.url,
                 data: response.status === 200 ? response.data : null,
                 cityId: params.cityId,
                 cityName: params.cityName,
@@ -46,7 +46,7 @@ export const fetchWeather = params => {
         })
         .catch(err => {
             return {
-                url: err.request.url,
+                url: err.config.url,
                 data: null,
                 cityId: params.cityId,
                 cityName: params.cityName,
@@ -62,7 +62,7 @@ export const fetchWeather = params => {
  * @param {String} weather.url
  * @param {object} weather.data
  */
-export const processRequestResult = weather => {
+export const processRequestResult = async (weather) => {
     if (weather.data) {
         const query = weather.data.query;
         const created = query.created;

@@ -1,22 +1,13 @@
-import React, { Component } from 'react';
-// import logo from './logo.svg';
-import './App.css';
+import React from 'react';
 
 import Header from './components/Header';
-import List from './components/List';
-import SelectCityModal from './components/modals/SelectCityModal';
+import CardsList from './contianers/cards/CardsList';
+import SelectCityModal from './contianers/modals/SelectCityModal';
 
-class App extends Component {
-
-  render() {
-    return (
-      <div>
-        <Header />
-        <List/>
-        <SelectCityModal/>
-      </div>
-    );
-  }
+export default function App() {
+	return (<>
+		<Header />
+		<CardsList />
+		<SelectCityModal />
+	</>)
 }
-
-export default App;

@@ -1,47 +1,31 @@
-import { ADD_CARD, REMOVE_CARD, UPDATE_ALL_CARDS } from './../actions/cards';
+import Immutable from 'immutable';
+import { actionsTypes } from 'actions/cards';
 
-let initialState = {
+let initialState = Immutable.fromJS({
     weatherList: [],
-};
+});
 
 export default (state = initialState, action) => {
     switch (action.type) {
-        case ADD_CARD: {
+        case actionsTypes.ADD_CARD: {
             const newCard = action.card;
-            const weatherList = JSON.parse(JSON.stringify(state.weatherList));
-            const exists = weatherList.findIndex(item => item.cityId === newCard.cityId);
+            const exists = state.get('weatherList').find(el => el.get('cityId') === newCard.cityId);
 
-            if (exists !== -1) {
+            if (exists) {
                 return state;
             }
 
-            weatherList.push(newCard);
-
-            return {
-                ...state,
-                weatherList,
-            };
+            return state.update('weatherList', list => list.push(Immutable.fromJS(newCard)));
         }
         
-        case UPDATE_ALL_CARDS: {
-            const weatherList = action.cards;
-
-            return {
-                ...state,
-                weatherList,
-            };
+        case actionsTypes.UPDATE_ALL_CARDS: {
+            return state.set('weatherList', Immutable.fromJS(action.cards));
         }
 
-        case REMOVE_CARD: {
-            const cityId = action.cityId;
-            const withoutRemoved = state.weatherList.filter(
-                item => item.cityId !== cityId
+        case actionsTypes.REMOVE_CARD: {
+            return state.update(
+                'weatherList', list => list.filter(el => el.get('cityId') !== action.cityId)
             );
-
-            return {
-                ...state,
-                weatherList: withoutRemoved,
-            };
         }
 
         default:

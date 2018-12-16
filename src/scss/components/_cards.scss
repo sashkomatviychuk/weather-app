@@ -1,0 +1,49 @@
+.card {
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,.14);
+    background-color: $color-white;
+
+    &:not(:first-child) {
+        margin-top: 1.5rem;
+    }
+
+    &-title {
+        font-size: 1.5rem;
+        margin: 1rem 0;
+    }
+
+    .icon {
+        width: 8rem;
+        height: 8rem;
+    }
+}
+
+.temp-text {
+    font-size: 6em;
+}
+  
+.temp-unit {
+    font-size: 0.5em;
+    vertical-align: super;
+}
+
+.weather-description dd {
+    margin-bottom: 0;
+}
+
+@media (max-width: 575.98px) {
+    .temp-text {
+        font-size: 4rem;
+    }
+
+    .card .icon {
+        width: 6rem;
+        height: 6rem;
+    }
+}
+
+@media (max-width: 457px) {
+    .weather-description dd {
+        margin: 0;
+    }
+}

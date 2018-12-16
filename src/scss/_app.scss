@@ -1,0 +1,61 @@
+body {
+    background-color: $color-gray;
+    min-height: 100vh;
+    height: 100%;
+}
+  
+.app__title {
+    color: white;
+    font-size: 1.3rem;
+}
+
+.bg-app {
+    background-color: $color-primary;
+}
+
+.container {
+    max-width: 50rem;
+    width: 100%;
+    margin: auto;
+    padding: 1.5rem;
+    background-color: $color-gray;
+    display: flex;
+    flex-direction: column;
+}
+
+.d-block {
+    display: block;
+}
+
+.p-relative {
+    position: relative;
+}
+
+.row-fluid {
+    display: block;
+    width: 100%;
+}
+
+.form-control {
+    width: 100%;
+}
+
+select {
+    height: 2rem;
+    font-size: .9rem;
+    border: 1px solid rgb(166, 166, 166);
+    background-clip: padding-box;
+    outline: none;
+
+    &:focus {
+        outline: none;
+    }
+}
+
+.form-group {
+    margin: .5rem 0;
+
+    &+.form-group {
+        margin-top: 1rem;
+    }
+}

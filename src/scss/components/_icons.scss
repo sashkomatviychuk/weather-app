@@ -1,0 +1,80 @@
+.custom-icon {
+    height: 1.5rem;
+    width: 1.5rem;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: transparent;
+    cursor: pointer;
+
+    &.icon {
+        &-reload {
+            background-image: url('/images/icon-refresh.svg');
+        }
+
+        &-add {
+            background-image: url('/images/icon-add.svg');
+        }
+
+        &-app {
+            background-image: url('/images/icon-app.svg');
+        }
+    }
+}
+
+span.icon-app {
+    width: 2rem;
+    height: 2rem;
+    display: block;
+}
+
+.icon-close {
+    width: 14px;
+    height: 14px;
+    background-color: transparent;
+    background-image: url('/images/icon-close.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    display: inline-block;
+}
+
+.icon {
+    background-repeat: no-repeat;
+    background-size: contain;
+    display: inline-block;
+
+    &.sunny-day, &.sunny-night {
+        background-image: url("/images/wi-day-sunny.svg");
+    }
+
+    &.rain {
+        background-image: url("/images/wi-rain.svg");
+    }
+
+    &.snow {
+        background-image: url("/images/wi-snow.svg");
+    }
+
+    &.sleet {
+        background-image: url("/images/wi-sleet.svg");
+    }
+
+    &.windy {
+        background-image: url("/images/wi-windy.svg");
+    }
+
+    &.fog {
+        background-image: url("/images/wi-day-fog.svg");
+    }
+
+    &.cloudy {
+        background-image: url("/images/wi-cloudy.svg");
+    }
+
+    &.thunderstorms {
+        background-image: url("/images/wi-thunderstorm.svg");
+    }
+
+    &.partly-cloudy-day,&.partly-cloudy-night {
+        background-image: url("/images/wi-day-cloudy.svg");
+    }
+}
