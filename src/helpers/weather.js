@@ -109,6 +109,7 @@ export const getIcon = weatherCode => {
         case 34: // fair (day)
         case 36: // hot
         case 3200: // not available
+        default:
             return 'sunny-day';
         case 0: // tornado
         case 1: // tropical storm
