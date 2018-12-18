@@ -1,4 +1,5 @@
 import axios from 'axios';
+import valueEqual from 'value-equal';
 
 const WEATHER_URL = 'https://query.yahooapis.com/v1/public/yql';
 
@@ -52,10 +53,11 @@ export const processRequestResult = async (weather) => {
         const query = weather.data.query;
         const created = query.created;
         const channel = query.results.channel;
+        const weatherData = prepareWeatherData(channel);
         
         return {
             ...weather,
-            data: { created, channel },
+            data: { created, ...weatherData },
         };
     } else {
         // get card from cache
@@ -66,16 +68,35 @@ export const processRequestResult = async (weather) => {
                 return response.json().then(function updateFromCache(json) {
                     const channel = json.query.results.channel;
                     const created = json.query.created;
+                    const weatherData = prepareWeatherData(channel);
 
                     return {
                         ...weather,
-                        data: { created, channel },
+                        data: { created, ...weatherData },
                     };
                 });
             }
         });
     }
 }
+
+const prepareWeatherData = channel => {
+    return {
+        conditionCode: channel.item.condition.code,
+        conditionText: channel.item.condition.text,
+        conditionTemp: channel.item.condition.temp,
+        windSpeed: channel.wind.speed,
+        humidity: channel.atmosphere.humidity,
+        sunrise: channel.astronomy.sunrise,
+        sunset: channel.astronomy.sunset,
+    };
+};
+
+export const comparator = (prevCard, nextCard) => (
+    prevCard.cityId === nextCard.cityId
+        && prevCard.loaded === nextCard.loaded
+        && valueEqual(prevCard.data, nextCard.data)
+);
 
 export const getIcon = weatherCode => {
     // Weather codes: https://developer.yahoo.com/weather/documentation.html#codes

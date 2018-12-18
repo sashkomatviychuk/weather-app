@@ -4,9 +4,8 @@ import compose from 'recompose/compose';
 import setDisplayName from 'recompose/setDisplayName';
 
 import { actions as cardsActions } from 'actions/cards';
-import { actions as modalActions } from 'actions/modal';
 import { dispatch } from 'store';
-import { fetchWeather, processRequestResult } from 'helpers/weather';
+import { fetchWeather, processRequestResult, comparator } from 'helpers/weather';
 import Card from 'components/cards/Card';
 
 const propsMapper = props$ => {
@@ -16,15 +15,11 @@ const propsMapper = props$ => {
         .flatMapLatest(params => fromPromise(fetchWeather(params)))
         .flatMapLatest(weather => fromPromise(processRequestResult(weather)))
         .filter(v => v)
-        .onValue(card => {
-            dispatch(cardsActions.updateCard(card));
-            dispatch(modalActions.hideModal());
-        });
+        .onValue(card => dispatch(cardsActions.updateCard(card)));
 
-    return props$.skipDuplicates().map(props => ({
-        ...props,
-        onRemove: () => props.onRemove(props.cityId),
-    }));
+    return props$
+        .skipDuplicates(comparator)
+        .map(props => props);
 }
 
 export default compose(

@@ -1,11 +1,9 @@
 import React from 'react';
-import { fromPromise } from 'kefir';
 import mapPropsStream from 'recompose/mapPropsStream';
 import compose from 'recompose/compose';
 import setDisplayName from 'recompose/setDisplayName';
 
 import Component from 'components/modals/SelectCityModal';
-import { fetchWeather, processRequestResult } from 'helpers/weather';
 import { dispatch, createEventHandler } from 'store';
 import * as cards from 'actions/cards';
 import * as modal from 'actions/modal';

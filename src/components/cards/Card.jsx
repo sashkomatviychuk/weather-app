@@ -11,7 +11,7 @@ function Card({ onRemove, ...card }) {
         return (<Loader
             cityId={cityId}
             cityName={cityName}
-            onRemove={onRemove}
+            onRemove={() => onRemove(cityId)}
         />);
     }
 

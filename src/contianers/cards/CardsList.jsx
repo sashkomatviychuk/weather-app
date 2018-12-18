@@ -3,6 +3,7 @@ import mapPropsStream from 'recompose/mapPropsStream';
 import compose from 'recompose/compose';
 import setDisplayName from 'recompose/setDisplayName';
 
+import { comparator } from 'helpers/weather';
 import { actions as cardsActions } from 'actions/cards';
 import { dispatch, createEventHandler } from 'store';
 import cardsList$ from 'store/streams/cards/list';
@@ -25,10 +26,31 @@ const cardsMapper = card => (<Card
     {...card}
 />);
 
+const cardsComparator = (prev, next) => {
+    const prevLength = prev.length || 0;
+    const nextLength = next.length || 0;
+
+    if (prevLength !== nextLength) {
+        return false;
+    }
+
+    for (let i = 0; i < nextLength; i++) {
+        if (!comparator(prev[i], next[i])) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+const mapper = cards => ({
+    cards: cards.map(cardsMapper),
+});
+
 const propsMapper = props$ => {
-    return cardsList$.map(cards => ({
-        cards: cards.map(cardsMapper),
-    }));
+    return cardsList$
+        .skipDuplicates(cardsComparator)
+        .map(mapper);
 };
 
 export default compose(
