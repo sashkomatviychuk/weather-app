@@ -23,9 +23,12 @@ statePoll.plug(stream((emitter) => {
 
 const dispatch = action => store.dispatch(action);
 
+const getIn = (path, defaultValue) => state => state.getIn(path, defaultValue);
+
 export {
     store,
     state$,
     dispatch,
     createEventHandler,
+    getIn,
 };

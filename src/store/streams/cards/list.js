@@ -1,6 +1,8 @@
-import { state$, store } from './../../index';
+import { state$, store, getIn } from 'store';
+
+const getWeatherList = getIn(['cards', 'weatherList'], []);
 
 export default state$
-    .map(state => state.getIn(['cards', 'weatherList']).toJS())
+    .map(state => getWeatherList(state).toJS())
     .skipDuplicates()
-    .toProperty(() => store.getState().getIn(['cards', 'weatherList'], []).toJS());
+    .toProperty(() => getWeatherList(store.getState()).toJS());

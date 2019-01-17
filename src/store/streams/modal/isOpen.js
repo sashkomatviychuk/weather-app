@@ -1,6 +1,8 @@
-import { state$, store } from './../../index';
+import { state$, store, getIn } from 'store';
+
+const getIsOpen = getIn(['modal', 'isOpen'], false);
 
 export default state$
-    .map(state => state.getIn(['modal', 'isOpen']))
-    .toProperty(() => store.getState().getIn(['modal', 'isOpen'], false))
+    .map(getIsOpen)
+    .toProperty(() => getIsOpen(store.getState()))
     .skipDuplicates();
