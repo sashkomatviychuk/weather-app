@@ -4,7 +4,8 @@ import compose from 'recompose/compose';
 import setDisplayName from 'recompose/setDisplayName';
 
 import Component from 'components/modals/SelectCityModal';
-import { dispatch, createEventHandler } from 'store';
+import { dispatch } from 'store';
+import { createEventHandler } from 'store/helpers';
 import * as cards from 'actions/cards';
 import * as modal from 'actions/modal';
 import { isOpen$ } from 'store/streams/modal';

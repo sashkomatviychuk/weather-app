@@ -5,7 +5,8 @@ import setDisplayName from 'recompose/setDisplayName';
 
 import { comparator } from 'helpers/weather';
 import { actions as cardsActions } from 'actions/cards';
-import { dispatch, createEventHandler } from 'store';
+import { dispatch } from 'store';
+import { createEventHandler } from 'store/helpers';
 import { weatherList$ } from 'store/streams/cards';
 import Component from 'components/cards/CardsList';
 import Card from 'contianers/cards/Card';
