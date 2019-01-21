@@ -7,7 +7,7 @@ import Component from 'components/modals/SelectCityModal';
 import { dispatch, createEventHandler } from 'store';
 import * as cards from 'actions/cards';
 import * as modal from 'actions/modal';
-import isOpen$ from 'store/streams/modal/isOpen';
+import { isOpen$ } from 'store/streams/modal';
 import getCities from 'helpers/citiesHelper';
 
 const cities = getCities();

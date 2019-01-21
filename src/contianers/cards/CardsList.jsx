@@ -6,7 +6,7 @@ import setDisplayName from 'recompose/setDisplayName';
 import { comparator } from 'helpers/weather';
 import { actions as cardsActions } from 'actions/cards';
 import { dispatch, createEventHandler } from 'store';
-import cardsList$ from 'store/streams/cards/list';
+import { weatherList$ } from 'store/streams/cards';
 import Component from 'components/cards/CardsList';
 import Card from 'contianers/cards/Card';
 
@@ -48,7 +48,7 @@ const mapper = cards => ({
 });
 
 const propsMapper = props$ => {
-    return cardsList$
+    return weatherList$
         .skipDuplicates(cardsComparator)
         .map(mapper);
 };
