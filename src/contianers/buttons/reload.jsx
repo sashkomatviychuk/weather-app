@@ -11,7 +11,8 @@ import { weatherList$ } from 'store/streams/cards';
 const { handler: onClick, stream: reloads$ } = createEventHandler();
 
 reloads$.debounce(500).flatMapLatest(() => weatherList$.take(1))
-    .onValue(cards => dispatch(cardsActions.updateAllCards(cards)));
+    .map(weatherList => weatherList.toJS())
+    .onValue(weatherList => dispatch(cardsActions.updateAllCards(weatherList)));
 
 const propsMapper = props$ => constant({
     onClick,

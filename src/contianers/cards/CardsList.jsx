@@ -43,12 +43,14 @@ const cardsComparator = (prev, next) => {
     return true;
 }
 
+// map to component props
 const mapper = cards => ({
     cards: cards.map(cardsMapper),
 });
 
 const propsMapper = props$ => {
     return weatherList$
+        .map(weatherList => weatherList.toJS())
         .skipDuplicates(cardsComparator)
         .map(mapper);
 };
