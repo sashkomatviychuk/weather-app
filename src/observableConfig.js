@@ -1,7 +1,7 @@
-import Kefir from 'kefir';
+import { from } from 'rxjs/observable/from';
 import setObservableConfig from 'recompose/setObservableConfig';
 
 setObservableConfig({
-	fromESObservable: Kefir.fromESObservable,
-	toESObservable: stream => stream.toESObservable(),
-});
+    fromESObservable: from,
+    toESObservable: s => s,
+})

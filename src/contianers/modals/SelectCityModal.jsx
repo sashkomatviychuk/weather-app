@@ -1,15 +1,17 @@
 import React from 'react';
-import mapPropsStream from 'recompose/mapPropsStream';
-import compose from 'recompose/compose';
-import setDisplayName from 'recompose/setDisplayName';
+import { map } from 'rxjs/operators/map';
+import { filter } from 'rxjs/operators/filter';
+import { switchMap } from 'rxjs/operators/switchMap';
+import { mapTo } from 'rxjs/operators/mapTo';
 
 import Component from 'components/modals/SelectCityModal';
-import { dispatch } from 'store';
-import { createEventHandler } from 'store/helpers';
 import * as cards from 'actions/cards';
 import * as modal from 'actions/modal';
-import { isOpen$ } from 'store/streams/modal';
+import { dispatch } from 'store';
+import { createEventHandler } from 'store/rx-helpers/index';
+import { isOpen$ } from 'store/selectors/modal';
 import getCities from 'helpers/citiesHelper';
+import connect from 'store/rx-helpers/connect';
 
 const cities = getCities();
 // move to new component with memo
@@ -20,10 +22,10 @@ const options = cities.map(
 const { handler: onCityChange, stream: cityChange$ } = createEventHandler();
 const { handler: onCityAdd, stream: cityAdd$ } = createEventHandler();
 
-const cities$ = cityChange$
-    .map(target => target.options)
-    .filter(options => options.selectedIndex)
-    .map(options => {
+const cities$ = cityChange$.pipe(
+    map(target => target.options),
+    filter(options => options.selectedIndex),
+    map(options => {
         const selectedIndex = options.selectedIndex;
         const cityName = options[selectedIndex].textContent;
         const cityId = options[selectedIndex].value;
@@ -32,30 +34,38 @@ const cities$ = cityChange$
             cityId,
             cityName,  
         };
-    });
+    })
+);
 
-cityAdd$.flatMapLatest(() => cities$.take(1))
-    .map(cityData => ({
+const subscription = cities$.pipe(
+    switchMap(data => cityAdd$.pipe(mapTo(data))),
+    map(cityData => ({
         ...cityData,
         loaded: false,
         data: null,
     }))
-    .onValue(card => {
-        dispatch(cards.actions.addCard(card));
-        dispatch(modal.actions.hideModal());
-    });
+).subscribe(card => {
+    dispatch(cards.actions.addCard(card));
+    dispatch(modal.actions.hideModal());
+});
 
-const propsMapper = props$ => {
-    return isOpen$.map(isOpen => ({
-        isOpen,
-        options,
-        onCityAdd,
-        onCityChange: ({target}) => onCityChange(target),
-        onClose: () => dispatch(modal.actions.hideModal()),
-    }));
+const mapObservablesToProps = props$ => {
+    return {
+        observables: { isOpen: isOpen$ },
+        props: {
+            options,
+            onCityAdd,
+            onCityChange: ({target}) => onCityChange(target),
+            onClose: () => dispatch(modal.actions.hideModal()),
+        },
+        unsubscribe() {
+            subscription.unsubscribe();
+        }
+    }
 }
 
-export default compose(
-    setDisplayName('SelectCityModal'),
-    mapPropsStream(propsMapper)
-)(Component);
+const Connected = connect(mapObservablesToProps)(Component);
+
+Connected.displayName = 'SelectCityModal';
+
+export default Connected;

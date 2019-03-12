@@ -1,18 +1,17 @@
 import Immutable from 'immutable';
 import configureStore from './configureStore';
-import { state$, createObservableState } from './configureObservableState'
+import { getObservableStore$ } from './rx-helpers/index';
 
+// configure store
 const initialState = window.REDUX_INITIAL_STATE || {};
 const store = configureStore(Immutable.Map(initialState));
-
-createObservableState(store);
-
+// make store  observable
+const observableStore$ = getObservableStore$(store);
+// store dispatch helper
 const dispatch = action => store.dispatch(action);
-const getIn = (path, defaultValue) => state => state.getIn(path, defaultValue);
 
 export {
     store,
-    state$,
+    observableStore$,
     dispatch,
-    getIn,
 };

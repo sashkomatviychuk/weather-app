@@ -3,8 +3,7 @@ import { getIcon } from 'helpers/weather';
 import { getDate } from 'helpers/dates';
 
 export default memo(function WeatherInfo({ onRemove, ...card }) {
-    const { cityId, cityName, data } = card;
-    const { created } = data
+    const { cityId, cityName, data, created } = card;
     const dateString = getDate(created);
     const icon = getIcon(data.conditionCode);
 

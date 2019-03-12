@@ -1,8 +1,8 @@
 import React from 'react';
 import setDisplayName from 'recompose/setDisplayName';
 import Icon from './base/Icon';
-import ShowModalButton from 'contianers/buttons/showModal';
-import ReloadCitiesButton from 'contianers/buttons/reload';
+import ShowModalButton from 'contianers/buttons/ButtonShowModal';
+import ReloadCitiesButton from 'contianers/buttons/ButtonReload';
 
 export default setDisplayName('Header')(() => {
     return (

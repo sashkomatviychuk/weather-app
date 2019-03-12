@@ -1,4 +1,6 @@
 const { GenerateSW } = require('workbox-webpack-plugin');
+const rxPaths = require('rxjs/_esm5/path-mapping');
+const webpack = require('webpack');
 
 function findWorkboxPlugin(element) {
     return element.constructor.name === 'GenerateSW'
@@ -24,6 +26,10 @@ module.exports = function override(config, env) {
                 overridenOptions
             );
         }
+
+        config.resolve.alias = rxPaths();
+
+        config.plugins.push(new webpack.optimize.ModuleConcatenationPlugin());
     }
 
     return config;

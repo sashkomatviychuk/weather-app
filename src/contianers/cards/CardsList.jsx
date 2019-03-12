@@ -1,62 +1,33 @@
 import React from 'react';
-import mapPropsStream from 'recompose/mapPropsStream';
-import compose from 'recompose/compose';
-import setDisplayName from 'recompose/setDisplayName';
+import { map } from 'rxjs/operators/map';
 
-import { comparator } from 'helpers/weather';
-import { actions as cardsActions } from 'actions/cards';
-import { dispatch } from 'store';
-import { createEventHandler } from 'store/helpers';
-import { weatherList$ } from 'store/streams/cards';
+import { weatherList$ } from 'store/selectors/cards';
 import Component from 'components/cards/CardsList';
 import Card from 'contianers/cards/Card';
-
-const { handler: onRemove, stream: removes$ } = createEventHandler();
-
-removes$
-    .skipDuplicates()
-    .onValue(cityId => {
-        if (window.confirm('Remove this city from list?')) {
-            dispatch(cardsActions.removeCard(cityId));
-        }
-    });
+import connect from 'store/rx-helpers/connect';
 
 const cardsMapper = card => (<Card
     key={card.cityId}
-    onRemove={onRemove}
-    {...card}
+    card={card}
 />);
 
-const cardsComparator = (prev, next) => {
-    const prevLength = prev.length || 0;
-    const nextLength = next.length || 0;
-
-    if (prevLength !== nextLength) {
-        return false;
-    }
-
-    for (let i = 0; i < nextLength; i++) {
-        if (!comparator(prev[i], next[i])) {
-            return false;
-        }
-    }
-
-    return true;
-}
-
 // map to component props
-const mapper = cards => ({
-    cards: cards.map(cardsMapper),
-});
+const mapper = cards => cards.map(cardsMapper);
 
-const propsMapper = props$ => {
-    return weatherList$
-        .map(weatherList => weatherList.toJS())
-        .skipDuplicates(cardsComparator)
-        .map(mapper);
+const mapObservablesToProps = props$ => {
+    const cards = weatherList$.pipe(
+        map(weatherList => weatherList.toJS()),
+        map(mapper),
+    );
+
+    return {
+        observables: { cards },
+        props: {},
+    };
 };
 
-export default compose(
-    setDisplayName('CardsList'),
-    mapPropsStream(propsMapper)
-)(Component);
+const Connected = connect(mapObservablesToProps)(Component);
+
+Connected.displayName = 'CardsList';
+
+export default Connected;

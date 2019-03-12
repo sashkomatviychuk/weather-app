@@ -1,28 +1,53 @@
-import { fromPromise } from 'kefir';
-import mapPropsStream from 'recompose/mapPropsStream';
-import compose from 'recompose/compose';
-import setDisplayName from 'recompose/setDisplayName';
+import { from } from 'rxjs/observable/from';
+import { map } from 'rxjs/operators/map';
+import { filter } from 'rxjs/operators/filter';
+import { switchMap } from 'rxjs/operators/switchMap';
+import { distinctUntilChanged } from 'rxjs/operators/distinctUntilChanged';
 
 import { actions as cardsActions } from 'actions/cards';
 import { dispatch } from 'store';
 import { fetchWeather, processRequestResult, comparator } from 'helpers/weather';
 import Card from 'components/cards/Card';
+import connect from 'store/rx-helpers/connect';
 
-const propsMapper = props$ => {
-    props$
-        .filter(({ loaded }) => !loaded)
-        .map(({ cityId, cityName }) => ({ cityId, cityName }))
-        .flatMapLatest(params => fromPromise(fetchWeather(params)))
-        .flatMapLatest(weather => fromPromise(processRequestResult(weather)))
-        .filter(v => v)
-        .onValue(card => dispatch(cardsActions.updateCard(card)));
-
-    return props$
-        .skipDuplicates(comparator)
-        .map(props => props);
+const onRemove = cityId => {
+    if (window.confirm('Remove this city from list?')) {
+        dispatch(cardsActions.removeCard(cityId));
+    }
 }
 
-export default compose(
-    setDisplayName('WeatherCard'),
-    mapPropsStream(propsMapper)
-)(Card);
+const filterLoaded = ({ card }) => !card.loaded;
+const mapCityParams = ({ card }) => ({ cityId: card.cityId, cityName: card.cityName });
+const compareCards = (prev, next) => prev.card.loaded === next.card.loaded;
+
+const mapObservablesToProps = props$ => {
+
+    const subscription = props$.pipe(
+        distinctUntilChanged(compareCards),
+        filter(filterLoaded),
+        map(mapCityParams),
+        switchMap(params => from(fetchWeather(params))),
+        switchMap(weather => from(processRequestResult(weather))),
+        filter(v => v)
+    )
+        .subscribe(card => dispatch(cardsActions.updateCard(card)));
+
+    const card = props$.pipe(
+        map(props => props.card),
+        distinctUntilChanged(comparator)
+    );
+
+    return {
+        observables: { card },
+        props: { onRemove },
+        unsubscribe() {
+            subscription.unsubscribe();
+        }
+    };
+}
+
+const Connected = connect(mapObservablesToProps)(Card);
+
+Connected.displayName = 'WeatherCard';
+
+export default Connected;

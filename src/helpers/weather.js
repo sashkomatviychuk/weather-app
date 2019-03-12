@@ -1,7 +1,7 @@
 import axios from 'axios';
 import valueEqual from 'value-equal';
 
-const WEATHER_URL = 'https://query.yahooapis.com/v1/public/yql';
+const WEATHER_URL = 'http://localhost:3033/api/weather';
 
 const getStatement = key => `select * from weather.forecast where woeid=${key}`;
 
@@ -10,9 +10,7 @@ const getStatement = key => `select * from weather.forecast where woeid=${key}`;
  * @param {String} key 
  */
 export const buildUrl = key => {
-    const statement = getStatement(key);
-
-    return `${WEATHER_URL}?format=json&q=${statement}`;
+    return `${WEATHER_URL}?cityId=${key}`;
 }
 
 /**
@@ -57,7 +55,8 @@ export const processRequestResult = async (weather) => {
         
         return {
             ...weather,
-            data: { created, ...weatherData },
+            created,
+            data: weatherData,
         };
     } else {
         // get card from cache
@@ -72,7 +71,8 @@ export const processRequestResult = async (weather) => {
 
                     return {
                         ...weather,
-                        data: { created, ...weatherData },
+                        created,
+                        data: weatherData,
                     };
                 });
             }
