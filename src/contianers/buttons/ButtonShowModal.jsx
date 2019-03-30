@@ -8,7 +8,7 @@ import { dispatch } from 'store';
 
 const propsMapper = () => ({
     onClick: () => dispatch(modal.actions.showModal()),
-    icon: 'icon-add',
+    icon: 'add',
 });
 
 export default compose(

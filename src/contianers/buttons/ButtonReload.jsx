@@ -21,7 +21,7 @@ const subscription = reloads$.pipe(
 
 const mapObservablesToProps = props$ => ({
     observables: {},
-    props: { onClick, icon: 'icon-reload' },
+    props: { onClick, icon: 'reload' },
     unsubscribe() {
         subscription.unsubscribe();
     }

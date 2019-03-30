@@ -7,43 +7,50 @@
         margin-top: 1.5rem;
     }
 
-    &-title {
+    &__header {
+        @include flexbox(row, space-between);
+
+        position: relative;
+        align-items: center;
+    }
+
+    &__title {
         font-size: 1.5rem;
         margin: 1rem 0;
     }
 
-    .icon {
-        width: 8rem;
-        height: 8rem;
+    &__conditions {
+        @include flexbox(row, start, wrap);
+
+        align-items: center;
     }
-}
 
-.temp-text {
-    font-size: 6em;
-}
-  
-.temp-unit {
-    font-size: 0.5em;
-    vertical-align: super;
-}
+    &__temperature-holder {
+        @include flexbox();
+        align-items: center;
+    }
 
-.weather-description dd {
-    margin-bottom: 0;
-}
-
-@media (max-width: 575.98px) {
-    .temp-text {
+    &__temperature {
         font-size: 4rem;
+
+        @include sm {
+            font-size: 6em;
+        }
     }
 
-    .card .icon {
-        width: 6rem;
-        height: 6rem;
+    &__temperature-unit {
+        font-size: 0.5em;
+        vertical-align: super;
     }
-}
 
-@media (max-width: 457px) {
-    .weather-description dd {
-        margin: 0;
+    &__condition-item {
+
+        @include sm {
+            margin-bottom: 0;
+        }
+
+        @media (max-width: 457px) {
+            margin: 0;
+        }
     }
 }

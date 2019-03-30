@@ -8,12 +8,12 @@ export default memo(function WeatherInfo({ onRemove, ...card }) {
     const icon = getIcon(data.conditionCode);
 
     return (
-        <div className="card mt-3">
-            <div className="card-body">
-                <div className="d-flex j-space-between ai-center p-relative">
-                    <h5 className="card-title">{cityName}</h5>
+        <div className="card">
+            <div className="card__body">
+                <div className="card__header">
+                    <h5 className="card__title">{cityName}</h5>
                     <button
-                        className="remove-btn icon-close"
+                        className="button button--remove icon icon--close"
                         onClick={() => onRemove(cityId)}
                     >
                     </button>
@@ -22,19 +22,19 @@ export default memo(function WeatherInfo({ onRemove, ...card }) {
                     <span className="d-block text-muted">{dateString}</span>
                     <span className="d-block text-muted">{data.conditionText}</span>
                 </div>
-                <div className="d-flex weather-conditions flex-wrap ai-center">
-                    <div className="d-flex temperature ai-center">
-                        <div className={`icon ${icon}`}></div>
-                        <div className="temp-text">
-                            {data.conditionTemp}<span className="temp-unit">F</span>
+                <div className="card__conditions">
+                    <div className="card__temperature-holder">
+                        <div className={`icon icon--weather icon--${icon}`}></div>
+                        <div className="card__temperature">
+                            {data.conditionTemp}<span className="card__temperature-unit">F</span>
                         </div>
                     </div>
-                    <div className="weather-description">
-                        <dl>
-                            <dd><b>Wind speed:</b> {data.windSpeed} mph</dd>
-                            <dd><b>Humidity:</b> {data.humidity} %</dd>
-                            <dd><b>Surise:</b> {data.sunrise}</dd>
-                            <dd><b>Sunset:</b> {data.sunset}</dd>
+                    <div className="card__condition-container">
+                        <dl className="card__condition">
+                            <dd className="card__condition-item"><b>Wind speed:</b> {data.windSpeed} mph</dd>
+                            <dd className="card__condition-item"><b>Humidity:</b> {data.humidity} %</dd>
+                            <dd className="card__condition-item"><b>Surise:</b> {data.sunrise}</dd>
+                            <dd className="card__condition-item"><b>Sunset:</b> {data.sunset}</dd>
                         </dl>
                     </div>
                 </div>

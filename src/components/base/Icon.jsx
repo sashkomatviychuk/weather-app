@@ -1,7 +1,7 @@
 import React from 'react';
 
-export default function Icon({ iconName }) {
+export default function Icon({ icon }) {
     return (
-        <span className={`custom-icon ${iconName}`}></span>
+        <span className={`icon icon--tool icon--${icon}`}></span>
     );
 }

@@ -22,13 +22,13 @@ export default function SelectCityModal(props) {
                         <div className="form-group">
                             <Button
                                 onClick={props.onCityAdd}
-                                className="button button-submit"
+                                className="button button--submit"
                             >
                                 Add
                             </Button>
                             <Button
                                 onClick={props.onClose}
-                                className="button button-cancel"
+                                className="button button--cancel"
                             >
                                 Cancel
                             </Button>

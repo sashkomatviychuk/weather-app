@@ -6,16 +6,16 @@ import ReloadCitiesButton from 'contianers/buttons/ButtonReload';
 
 export default setDisplayName('Header')(() => {
     return (
-        <header className="d-flex bg-app j-space-between ai-center">
-            <div className="app-title">
-                <Icon iconName="icon-app" />
+        <header className="header">
+            <div className="header__app-title">
+                <Icon icon="app" />
             </div>
             <nav>
                 <ul className="navbar">
-                    <li className="nav-item">
+                    <li className="navbar__item">
                         <ReloadCitiesButton />
                     </li>
-                    <li className="nav-item">
+                    <li className="navbar__item">
                         <ShowModalButton />
                     </li>
                 </ul>

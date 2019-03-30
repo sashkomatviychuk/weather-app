@@ -1,80 +1,80 @@
-.custom-icon {
-    height: 1.5rem;
-    width: 1.5rem;
+.icon {
+    display: inline-block;
+    border: 0;
     background-repeat: no-repeat;
     background-size: contain;
-    background-color: transparent;
-    cursor: pointer;
 
-    &.icon {
-        &-reload {
-            background-image: url('/images/icon-refresh.svg');
-        }
+    &--close {
+        width: 14px;
+        height: 14px;
+        background-color: transparent;
+        background-image: url('/images/icon-close.svg');
+    }
 
-        &-add {
-            background-image: url('/images/icon-add.svg');
-        }
+    &--tool {
+        height: 1.5rem;
+        width: 1.5rem;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-color: transparent;
+        cursor: pointer;
+    }
 
-        &-app {
-            background-image: url('/images/icon-app.svg');
+    &--reload {
+        background-image: url('/images/icon-refresh.svg');
+    }
+
+    &--add {
+        background-image: url('/images/icon-add.svg');
+    }
+
+    &--app {
+        display: block;
+        width: 2rem;
+        height: 2rem;
+        background-image: url('/images/icon-app.svg');
+    }
+
+    &--weather {
+        @include sm {
+            width: 6rem;
+            height: 6rem;
         }
     }
-}
 
-span.icon-app {
-    width: 2rem;
-    height: 2rem;
-    display: block;
-}
-
-.icon-close {
-    width: 14px;
-    height: 14px;
-    background-color: transparent;
-    background-image: url('/images/icon-close.svg');
-    background-repeat: no-repeat;
-    background-size: contain;
-    display: inline-block;
-}
-
-.icon {
-    background-repeat: no-repeat;
-    background-size: contain;
-    display: inline-block;
-
-    &.sunny-day, &.sunny-night {
+    &--sunny-day, &--sunny-night {
         background-image: url("/images/wi-day-sunny.svg");
     }
 
-    &.rain {
+    &--rain {
         background-image: url("/images/wi-rain.svg");
     }
 
-    &.snow {
+    &--snow {
         background-image: url("/images/wi-snow.svg");
     }
 
-    &.sleet {
+    &--sleet {
         background-image: url("/images/wi-sleet.svg");
     }
 
-    &.windy {
+    &--windy {
         background-image: url("/images/wi-windy.svg");
     }
 
-    &.fog {
+    &--fog {
         background-image: url("/images/wi-day-fog.svg");
     }
 
-    &.cloudy {
+    &--cloudy {
         background-image: url("/images/wi-cloudy.svg");
     }
 
-    &.thunderstorms {
+    &--thunderstorms {
         background-image: url("/images/wi-thunderstorm.svg");
     }
 
-    &.partly-cloudy-day,&.partly-cloudy-night {
+    &--partly-cloudy-day,&--partly-cloudy-night {
         background-image: url("/images/wi-day-cloudy.svg");
     }
 }
